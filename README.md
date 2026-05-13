@@ -4,6 +4,8 @@ A frameless desktop clock app built with Electron. Features a glowing orange dig
 
 ![Orange Clock](https://img.shields.io/badge/Electron-Desktop-orange)
 
+![screenshot](assets/screenshot.png)
+
 ## Features
 
 - Large digital time display (12-hour format with AM/PM)
