@@ -210,8 +210,10 @@ function playBeep() {
 
   const t = ctx.currentTime + 0.05;
   chirp(t);
-  chirp(t + 0.30);
   chirp(t + 0.60);
+  chirp(t + 1.20);
+  chirp(t + 1.80);
+  chirp(t + 2.40);
 
-  setTimeout(() => ctx.close(), 1200);
+  setTimeout(() => ctx.close(), 3200);
 }
