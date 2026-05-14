@@ -194,11 +194,23 @@ updateTmDisplay();
 // ── Beep ───────────────────────────────────────────────────────────────────
 function playBeep() {
   const utter = new SpeechSynthesisUtterance('time is up');
-  utter.pitch  = 1.1;
+  utter.pitch  = 1.0;
   utter.rate   = 0.75;
   utter.volume = 1.0;
-  const voices = speechSynthesis.getVoices();
-  const lady = voices.find(v => /zira|hazel|susan|eva|female|woman/i.test(v.name));
-  if (lady) utter.voice = lady;
-  speechSynthesis.speak(utter);
+
+  const speak = () => {
+    const voices = speechSynthesis.getVoices();
+    const lady = voices.find(v => /zira|hazel|susan|eva|female|woman/i.test(v.name));
+    if (lady) utter.voice = lady;
+    speechSynthesis.speak(utter);
+  };
+
+  if (speechSynthesis.getVoices().length > 0) {
+    speak();
+  } else {
+    speechSynthesis.onvoiceschanged = () => {
+      speechSynthesis.onvoiceschanged = null;
+      speak();
+    };
+  }
 }
