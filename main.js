@@ -1,8 +1,10 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
+let win;
+
 function createWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 500,
     height: 180,
     resizable: false,
@@ -10,13 +12,19 @@ function createWindow() {
     transparent: true,
     webPreferences: {
       contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
   win.loadFile('index.html');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+  ipcMain.on('resize-window', (e, { width, height }) => {
+    if (win) win.setSize(width, height);
+  });
+});
 
 app.on('window-all-closed', () => {
   app.quit();
